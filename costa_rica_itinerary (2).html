@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Costa Rica · June 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f4f1ed;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* HERO */
+  .hero {
+    background: #1a3a2a;
+    color: white;
+    padding: 2rem 1.25rem 1.5rem;
+    text-align: center;
+  }
+  .hero-emoji { font-size: 2rem; margin-bottom: 0.4rem; }
+  .hero h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.3px; }
+  .hero-sub { font-size: 0.8rem; opacity: 0.65; margin-top: 0.25rem; letter-spacing: 0.5px; }
+  .hero-chips {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0.5rem; margin-top: 1.1rem;
+  }
+  .chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    justify-content: center;
+    background: white;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2ddd7;
+  }
+  .leg {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.7rem; font-weight: 500;
+    padding: 3px 9px; border-radius: 20px; border: 1px solid;
+  }
+  .leg-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .leg.b { background:#eaf7ef; color:#1a5c30; border-color:#5db87a; }
+  .leg.b .leg-dot { background:#5db87a; }
+  .leg.s { background:#f0ecfa; color:#4a3580; border-color:#9b87d4; }
+  .leg.s .leg-dot { background:#9b87d4; }
+  .leg.r { background:#f5f4f0; color:#555; border-color:#bbb; }
+  .leg.r .leg-dot { background:#bbb; }
+  .leg.t { background:#e8f4fd; color:#1a4f7a; border-color:#5fa8d8; }
+  .leg.t .leg-dot { background:#5fa8d8; }
+
+  /* MAIN */
+  .main { padding: 0.85rem 0.85rem 3rem; max-width: 540px; margin: 0 auto; }
+
+  /* DAY CARD */
+  .day-card {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #e2ddd7;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+
+  .day-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+    transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .day-header.open { border-bottom-color: #ede8e2; }
+  .day-header:active { background: #faf8f5; }
+
+  .day-circle {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex-shrink: 0; line-height: 1;
+  }
+  .day-circle .dow { font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; }
+  .day-circle .dom { font-size: 0.95rem; font-weight: 600; }
+  .day-circle.travel { background: #e8f4fd; color: #1a4f7a; }
+  .day-circle.excursion { background: #eaf7ef; color: #1a5c30; }
+  .day-circle.spa { background: #fef0f8; color: #7a2d68; }
+
+  .day-info { flex: 1; min-width: 0; }
+  .day-title { font-size: 0.9rem; font-weight: 600; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .day-meta { font-size: 0.72rem; color: #888; margin-top: 1px; }
+
+  .day-chev { font-size: 1rem; color: #aaa; transition: transform 0.2s; flex-shrink: 0; }
+  .day-chev.open { transform: rotate(180deg); }
+
+  /* BODY */
+  .day-body { display: none; }
+  .day-body.open { display: block; }
+
+  /* NEED TO KNOW */
+  .day-prep {
+    margin: 0.6rem 0.85rem 0;
+    background: #fffbf0;
+    border-left: 3px solid #c9883a;
+    border-radius: 0 8px 8px 0;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.78rem;
+    color: #6b4c1e;
+    line-height: 1.55;
+  }
+  .day-prep strong { font-weight: 600; }
+
+  /* TIMELINE */
+  .timeline { padding: 0.6rem 0.85rem 0.85rem; }
+
+  .tl-item { display: flex; gap: 10px; }
+  .tl-left {
+    display: flex; flex-direction: column; align-items: center;
+    min-width: 48px; flex-shrink: 0;
+  }
+  .tl-time { font-size: 0.65rem; font-weight: 600; color: #999; white-space: nowrap; padding-top: 2px; min-height: 18px; }
+  .tl-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0; margin: 3px 0;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1.5px currentColor;
+  }
+  .tl-dot.b { color: #5db87a; background: #5db87a; }
+  .tl-dot.s { color: #9b87d4; background: #9b87d4; }
+  .tl-dot.r { color: #bbb; background: #bbb; }
+  .tl-dot.t { color: #5fa8d8; background: #5fa8d8; }
+  .tl-line { width: 1.5px; flex: 1; background: #ede8e2; min-height: 10px; }
+
+  .tl-content { flex: 1; padding-bottom: 0.85rem; min-width: 0; }
+  .tl-label { display: flex; align-items: flex-start; gap: 6px; flex-wrap: wrap; padding-top: 1px; }
+  .tl-name { font-size: 0.85rem; font-weight: 500; color: #1a1a1a; line-height: 1.3; }
+  .tl-detail { font-size: 0.78rem; color: #666; margin-top: 3px; line-height: 1.55; }
+
+  .badge {
+    font-size: 0.6rem; font-weight: 700;
+    padding: 2px 6px; border-radius: 20px;
+    white-space: nowrap; text-transform: uppercase;
+    letter-spacing: 0.3px; flex-shrink: 0; margin-top: 2px;
+  }
+  .badge.b { background:#eaf7ef; color:#1a5c30; border: 1px solid #5db87a; }
+  .badge.s { background:#f0ecfa; color:#4a3580; border: 1px solid #9b87d4; }
+  .badge.r { background:#f5f4f0; color:#666; border: 1px solid #ccc; }
+  .badge.t { background:#e8f4fd; color:#1a4f7a; border: 1px solid #5fa8d8; }
+
+  /* NOTES */
+  .notes {
+    background: #1a3a2a; color: white;
+    border-radius: 14px; padding: 1.1rem;
+    margin-top: 0.75rem;
+  }
+  .notes h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #7ec850; margin-bottom: 0.85rem; font-weight: 600; }
+  .notes-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .note-row { display: flex; gap: 8px; font-size: 0.8rem; }
+  .note-icon { font-size: 0.95rem; flex-shrink: 0; margin-top: 1px; }
+  .note-text { color: rgba(255,255,255,0.85); line-height: 1.5; }
+  .note-text strong { color: white; font-weight: 600; }
+
+  /* PACK */
+  .pack {
+    background: white; border: 1px solid #e2ddd7;
+    border-radius: 14px; padding: 1.1rem;
+    margin-top: 0.75rem;
+  }
+  .pack h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #1a3a2a; margin-bottom: 0.85rem; font-weight: 600; }
+  .pack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 0.5rem; }
+  .pack-item { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; color: #444; }
+  .pack-item span { font-size: 0.9rem; }
+
+  .footer { text-align: center; padding: 1.5rem 1rem; font-size: 0.7rem; color: #aaa; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-emoji">🌿</div>
+  <h1>Costa Rica · June 2025</h1>
+  <div class="hero-sub">TAMARINDO · HOTEL PASATIEMPO</div>
+  <div class="hero-chips">
+    <span class="chip">✈ IAH → LIR · United</span>
+    <span class="chip">📅 Jun 13–20</span>
+    <span class="chip">6 excursions booked</span>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg b"><div class="leg-dot"></div>Pre-booked</div>
+  <div class="leg s"><div class="leg-dot"></div>Suggestion</div>
+  <div class="leg r"><div class="leg-dot"></div>Rest</div>
+  <div class="leg t"><div class="leg-dot"></div>Travel</div>
+</div>
+
+<div class="main">
+
+  <!-- JUNE 13 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle travel"><span class="dow">Sat</span><span class="dom">13</span></div>
+      <div class="day-info">
+        <div class="day-title">Pre-flight night</div>
+        <div class="day-meta">June 13 · Grandma's house</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">Eve</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Drive to grandma's</span><span class="badge t">Travel</span></div>
+            <div class="tl-detail">Head from North Austin to grandma's so she can take you to IAH in the morning.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">Night</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Pack & prep</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Lay everything out tonight. Passports, boarding passes (screenshot offline), chargers, sunscreen, bug spray. Bag by the door.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">10 PM</span><div class="tl-dot r"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Early bedtime</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">5 AM wake-up tomorrow. Set two alarms.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 14 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle travel"><span class="dow">Sun</span><span class="dom">14</span></div>
+      <div class="day-info">
+        <div class="day-title">Travel day → Tamarindo</div>
+        <div class="day-meta">June 14 · IAH → LIR → Hotel</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-prep"><strong>Bring on the plane:</strong> Passport easily accessible, download offline maps of Tamarindo, snacks for the shuttle ride.</div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5 AM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Wake up · Grandma's</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Get dressed, final bag check, grab a quick bite if possible.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5:15</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Depart for IAH</span><span class="badge t">Travel</span></div>
+            <div class="tl-detail">~2.5 hrs to Houston. Grandma drops you at the terminal — United international.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5:45</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Check in & security</span><span class="badge t">Travel</span></div>
+            <div class="tl-detail">International security can have lines — you have good buffer. Keep passport handy. No visa needed for Costa Rica as a US citizen.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7:20</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">✈ Flight departs IAH</span><span class="badge t">Travel</span></div>
+            <div class="tl-detail">~2.5 hr flight to Liberia. Sleep if you can.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9:50</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Land at LIR · Costa Rica 🌿</span><span class="badge t">Travel</span></div>
+            <div class="tl-detail">Same time zone as CST. Head straight to immigration — budget 30–45 min. Fill out customs form (on plane or at terminal). ATMs available at airport.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">11 AM</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🚐 Shuttle → Tamarindo</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">1.5–2 hr ride to Hotel Pasatiempo depending on stops. Bring a snack. Enjoy the scenery.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">~1 PM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Arrive & check in</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Drop bags, freshen up. Ask about early check-in. Get hotel map + beach directions.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">1:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🏖 First beach walk</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">5–8 min walk to Playa Tamarindo. Put your feet in the Pacific. Grab agua de pipa (fresh coconut, ~$2) from a beach vendor.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">3:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Rest at hotel</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">You've been up since 5 AM. Nap or decompress in the AC. Set alarm for 5:30 PM.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🌅 Sunset drinks</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Grab a cold Imperial or guaro sour at a beachfront bar. Try Nogui's or Shaka. Tamarindo sunsets are stunning.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7 PM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🍽 Dinner</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Try a casado (rice, beans, plantains + protein, ~$10) at a local soda. Witch's Rock Surf Camp or El Mercadito for fresh ceviche.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9 PM</span><div class="tl-dot r"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Early night</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">ATV + Zipline tomorrow at 11:30 AM.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 15 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle excursion"><span class="dow">Mon</span><span class="dom">15</span></div>
+      <div class="day-info">
+        <div class="day-title">ATV + Zipline Tour</div>
+        <div class="day-meta">June 15 · 11:30 AM – 3:30 PM</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-prep"><strong>Wear:</strong> Old clothes + closed-toe shoes (required) · Swimsuit underneath · Bandana for dust<br><strong>Bring:</strong> Water bottle, sunscreen, sunglasses, phone in a zip bag</div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Wake up</span><span class="badge r">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8 AM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">☕ Breakfast</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Eat a real meal — you're on ATVs for hours. Gallo pinto + eggs at a nearby soda (~$6).</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9 AM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🌊 Morning beach walk</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Easy stroll before the heat kicks in. Watch the surfers.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">10:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Get ready for tour</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Change, apply sunscreen, head to pickup point.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">11:30</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🏍 ATV + Zipline Tour</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">Off-road ATV through jungle trails + multiple zip line platforms over the canopy. Guide handles all safety gear and briefing. Expect dust, adrenaline, and howler monkeys.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">3:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Tour ends · Shower & rest</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Rinse off well (jungle dirt is stubborn). Hydrate and rest 1–1.5 hrs.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5 PM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🛍 Browse the strip</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Surf shops, souvenir stands, local jewelry, coffee to bring home.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">6:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🍹 Happy hour</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">2-for-1 deals at most bars until 6–7 PM. Try a guaro sour.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🐟 Dinner — fresh seafood</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Seasons by Shlomy or El Mercadito for fresh mahi-mahi, tuna, or ceviche.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9:30</span><div class="tl-dot r"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Wind down</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Sloth tour at noon tomorrow — free morning.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 16 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle excursion"><span class="dow">Tue</span><span class="dom">16</span></div>
+      <div class="day-info">
+        <div class="day-title">Sloths + Coffee, Chocolate & Sugarcane</div>
+        <div class="day-meta">June 16 · 12:00 PM – 3:00 PM</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-prep"><strong>Wear:</strong> Comfortable clothes + walking shoes<br><strong>Expect:</strong> Wildlife rescue sanctuary, farm tastings, freshly pressed sugarcane juice, coffee + chocolate samples to try (and possibly buy to bring home)</div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8 AM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Sleep in</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Free morning — enjoy it after two big days.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">☕ Leisurely breakfast</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Sit-down meal — batido (fresh fruit drink), gallo pinto, eggs.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🏄 Beach swim or surf</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Swim at the south end of Playa Tamarindo (calmer water). Walk-up surf lessons available ~$40–50 if you want a preview before your lesson on the 18th.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">11 AM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Rinse off & get ready</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Confirm pickup location with your tour operator.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">Noon</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🦥 Sloths + Coffee, Chocolate & Sugarcane Tour</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">Wildlife sanctuary with rescued sloths, then a farm where you learn how cacao becomes chocolate, taste fresh sugarcane, and sample local coffee. Genuinely one of the best food experiences in the country.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">3 PM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Tour ends · Rest</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Head back and rest before evening. Big day tomorrow — 8 AM start.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5 PM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🌊 Walk to Playa Langosta</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">20-min walk or $5 taxi south of Tamarindo. Quieter beach, beautiful at sunset. Fewer tourists.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🍽 Dinner</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Dragonfly Bar & Grill — eclectic open-air garden setting, great menu.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9 PM</span><div class="tl-dot r"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">⚠️ Early night</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Arenal volcano day starts at 8 AM. Set alarm for 6 AM. Pack your bag tonight.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 17 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle excursion"><span class="dow">Wed</span><span class="dom">17</span></div>
+      <div class="day-info">
+        <div class="day-title">Waterfall + Arenal + Hot River</div>
+        <div class="day-meta">June 17 · 8:00 AM – 3:30 PM</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-prep"><strong>Wear:</strong> Hiking clothes + water shoes or sneakers · Swimsuit underneath · Light rain jacket<br><strong>Bring:</strong> Extra water, sunscreen, bug spray, snacks, phone in waterproof bag<br><strong>Expect:</strong> 2–3 hr drive each way, jungle hike to waterfall, Arenal volcano views, included lunch, volcanic hot river soak at the end</div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">6 AM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">⏰ Wake up — set multiple alarms</span><span class="badge r">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">6:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">☕ Substantial breakfast</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Eat well — it's a full day of hiking. Lunch is included on the tour but it's hours away.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Gear up & meet pickup</span><span class="badge r">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8 AM</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🌋 Waterfall + Arenal + Lunch + Hot River</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">Full day: jungle hike to a waterfall, guided Arenal Volcano trail, traditional casado lunch at a jungle restaurant, then soak in a naturally volcanic hot river. Your muscles will thank you after a week of activity.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">3:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Tour ends · Return drive</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">2–3 hr ride back. Nap in the van. Arrive late afternoon.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">~6 PM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Shower & proper rest</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">This was a 10+ hr day. Rest as long as you need.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7 PM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🍽 Easy dinner close by</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Nothing too far. Fish tacos, rice and chicken, or street food near the hotel. Keep it simple tonight.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9:30</span><div class="tl-dot r"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Bedtime</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Surf lessons at 11 AM tomorrow — gentle morning ahead.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 18 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle excursion"><span class="dow">Thu</span><span class="dom">18</span></div>
+      <div class="day-info">
+        <div class="day-title">Surf Lessons + Catamaran</div>
+        <div class="day-meta">June 18 · 11:00 AM – 1:00 PM + afternoon</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-prep"><strong>Wear:</strong> Swimsuit · Rash guard (usually provided for surf)<br><strong>Bring:</strong> Reef-safe sunscreen, water, leave valuables at hotel<br><strong>Expect:</strong> Surf on one of the best beginner beaches in Central America. Most people stand up by end of lesson. Boards + rash guard included.</div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Wake up — slow morning</span><span class="badge r">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9 AM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🍳 Breakfast</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Eat 2 hrs before getting in the water. Fruit, eggs, toast — nothing too heavy.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">10:15</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Head to beach</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Sunscreen on. Find your instructor on the beach.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">11 AM</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🏄‍♀️ Surf Lessons</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">2 hours on Playa Tamarindo. Start on sand (pop-up technique), then into the water. Go with the waves and have fun.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">1 PM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Rinse off & snack</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Fresh coconut or smoothie from a beach vendor. Rehydrate before the afternoon.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">~2:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">⛵ Catamaran Tour</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Afternoon departure (~2.5–3 hrs on water). Snorkeling, dolphin watching, drinks onboard, sunset return. ~$60–80/person. Book at the hotel desk or on the strip — ask for Blue Dolphin, Marlin del Rey, or Lazy Lizard.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🌅 Sunset from the water</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Cocktail in hand, sun setting over the Pacific. One of the best moments of the trip.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🥂 Dinner & night out</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Second-to-last night — make it fun. Dinner at Seasons by Shlomy, then El Garito for dancing or bar-hop the strip.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">10:30</span><div class="tl-dot r"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Wind down</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">9 AM spa pickup tomorrow. Don't be too late.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 19 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle spa"><span class="dow">Fri</span><span class="dom">19</span></div>
+      <div class="day-info">
+        <div class="day-title">Luxury Jungle Spa Day</div>
+        <div class="day-meta">June 19 · 9:00 AM pickup</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="day-prep"><strong>Wear:</strong> Comfortable clothes, easy to change · Flip flops or sandals<br><strong>Bring:</strong> Bathing suit, refillable water bottle<br><strong>Included:</strong> Roundtrip transport · 3 treatments · Lunch · 1 complimentary drink</div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Gentle wake-up</span><span class="badge r">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8 AM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">☕ Light breakfast</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Avoid a heavy meal before body treatments. Fruit, yogurt, juice is ideal.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8:45</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Ready at hotel lobby</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Be at the pickup spot 5–10 min early. Confirm exact location with the spa in advance.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9 AM</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🌿 Shuttle to Jungle Spa</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">Included roundtrip transport from Tamarindo/Langosta.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">Morning</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">✨ 3 Spa Treatments</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">Luxury spa set in the jungle. Massage, facial, body treatment. Phone off. Surrender to it — your body has earned this after a week of adventures.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">~1 PM</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🥗 Included Lunch + Drink</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">Eat slowly. Enjoy the jungle around you.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">~3 PM</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Return shuttle to hotel</span><span class="badge t">Travel</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">3:30</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🧳 Pack everything tonight</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Shuttle at 10:30 AM tomorrow. Pack now so the morning is stress-free. Leave out only what you need tonight and in the AM.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">5:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🏖 Final sunset beach walk</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Last one. Take it in. Pick up any final souvenirs from evening vendors.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">7 PM</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🥂 Farewell dinner</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Return to your favorite spot or try somewhere you missed. Make it count.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">9 PM</span><div class="tl-dot r"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Final check & early night</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Passport, chargers, boarding pass, medications. Alarm for 8 AM.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 20 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-circle travel"><span class="dow">Sat</span><span class="dom">20</span></div>
+      <div class="day-info">
+        <div class="day-title">Fly home · Tamarindo → Houston</div>
+        <div class="day-meta">June 20 · LIR 3:27 PM → IAH 8:12 PM</div>
+      </div>
+      <span class="day-chev">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8 AM</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Wake up · Last morning</span><span class="badge r">Rest</span></div>
+            <div class="tl-detail">Open the window. Listen to the birds one more time.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8:30</span><div class="tl-dot s"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">☕ Final breakfast & checkout</span><span class="badge s">Suggestion</span></div>
+            <div class="tl-detail">Settle charges, return keys. Gallo pinto one last time. Don't forget anything in the room — especially bathroom items and swimsuits on the line.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">10:15</span><div class="tl-dot r"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Bags at lobby — ready to go</span><span class="badge r">Rest</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">10:30</span><div class="tl-dot b"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🚐 Shuttle → Liberia Airport</span><span class="badge b">Pre-booked</span></div>
+            <div class="tl-detail">~1.5–2 hr ride. Last look at Costa Rica out the window.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">~12:30</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">Arrive LIR · Check in</span><span class="badge t">Travel</span></div>
+            <div class="tl-detail">Nearly 3 hrs before your flight. Check in, bag drop, security. Grab a last coffee or souvenir airside — spend your remaining colones here.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">3:27</span><div class="tl-dot t"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">✈ Flight departs LIR</span><span class="badge t">Travel</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><span class="tl-time">8:12</span><div class="tl-dot t"></div></div>
+          <div class="tl-content">
+            <div class="tl-label"><span class="tl-name">🏠 Land at IAH · Welcome home</span><span class="badge t">Travel</span></div>
+            <div class="tl-detail">Customs, baggage claim, then drive back to Austin (~2.5 hrs). Pura Vida. 🌿</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- GOOD TO KNOW -->
+  <div class="notes">
+    <h3>Good to Know</h3>
+    <div class="notes-list">
+      <div class="note-row"><span class="note-icon">💵</span><span class="note-text"><strong>Currency:</strong> USD widely accepted in Tamarindo. Carry small bills for vendors and tips.</span></div>
+      <div class="note-row"><span class="note-icon">🌧</span><span class="note-text"><strong>Weather:</strong> Green season — brief afternoon showers are normal. Mornings are sunny. Pack a light rain jacket.</span></div>
+      <div class="note-row"><span class="note-icon">🌊</span><span class="note-text"><strong>Ocean safety:</strong> Rip currents exist on Playa Tamarindo. Swim near flags. If caught in a rip — swim parallel to shore.</span></div>
+      <div class="note-row"><span class="note-icon">🧴</span><span class="note-text"><strong>Sun:</strong> Reef-safe sunscreen required near coral. Reapply every 2 hrs — tropical sun burns fast even on cloudy days.</span></div>
+      <div class="note-row"><span class="note-icon">🚕</span><span class="note-text"><strong>Getting around:</strong> Tamarindo is walkable. Taxis are cheap ($3–8 local). Ask the hotel for trusted drivers.</span></div>
+      <div class="note-row"><span class="note-icon">💰</span><span class="note-text"><strong>Tipping:</strong> 10% is often included on restaurant bills. Tip tour guides $5–10/person — it's meaningful.</span></div>
+    </div>
+  </div>
+
+  <!-- PACKING -->
+  <div class="pack">
+    <h3>What to Pack</h3>
+    <div class="pack-grid">
+      <div class="pack-item"><span>🛂</span> Passport</div>
+      <div class="pack-item"><span>🧴</span> Reef-safe sunscreen</div>
+      <div class="pack-item"><span>🦟</span> Bug spray</div>
+      <div class="pack-item"><span>👟</span> Closed-toe shoes</div>
+      <div class="pack-item"><span>👙</span> 2–3 swimsuits</div>
+      <div class="pack-item"><span>🌧</span> Light rain jacket</div>
+      <div class="pack-item"><span>💧</span> Water bottle</div>
+      <div class="pack-item"><span>👡</span> Flip flops</div>
+      <div class="pack-item"><span>🥾</span> Water shoes</div>
+      <div class="pack-item"><span>🎒</span> Small day pack</div>
+      <div class="pack-item"><span>😎</span> Sunglasses</div>
+      <div class="pack-item"><span>🎭</span> Bandana (ATV!)</div>
+      <div class="pack-item"><span>💊</span> Medications</div>
+      <div class="pack-item"><span>🏦</span> Small USD cash</div>
+    </div>
+  </div>
+
+  <div class="footer">Pura Vida 🌿 · Costa Rica June 2025</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.day-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      var body = header.nextElementSibling;
+      var chev = header.querySelector('.day-chev');
+      var isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      header.classList.toggle('open', !isOpen);
+      chev.classList.toggle('open', !isOpen);
+    });
+    header.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      header.click();
+    });
+  });
+});
+</script>
+</body>
+</html>
